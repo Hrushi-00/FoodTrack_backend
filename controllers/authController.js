@@ -179,10 +179,10 @@ export const login = async (req, res) => {
 // Signup controller
 export const signup = async (req, res) => {
   try {
-    const { email, password, fullName, phone, hotel, role, address } = req.body;
+    const { email, password, fullName, phone, hotelName, role, address } = req.body;
 
     // Input validation
-    if (!email || !password || !fullName || !phone || !hotel || !address) {
+    if (!email || !password || !fullName || !phone || !hotelName || !address) {
       return res.status(400).json({ 
         success: false,
         message: 'Please provide email, password, full name, phone number, hotel name, and address',
@@ -191,7 +191,7 @@ export const signup = async (req, res) => {
           password: !password ? 'Password is required' : null,
           fullName: !fullName ? 'Full name is required' : null,
           phone: !phone ? 'Phone number is required' : null,
-          hotel: !hotel ? 'Hotel name is required' : null,
+          hotelName: !hotelName ? 'Hotel name is required' : null,
           address: !address ? 'Address is required' : null,
           role: !role ? 'Role is required' : null
         }
@@ -223,7 +223,7 @@ export const signup = async (req, res) => {
       password,
       fullName,
       phone,
-      hotel,
+      hotelName,
       address,
       role
 

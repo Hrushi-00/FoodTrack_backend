@@ -5,6 +5,8 @@ import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import menuRoutes from "./routes/menuRoutes.js";
 import mealTokenRoutes from "./routes/mealTokenRoutes.js";
+import employeeRoutes from "./routes/employeeRoutes.js";
+
 import path from "path";
 dotenv.config();
 connectDB();
@@ -17,10 +19,13 @@ app.use(express.json());
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api/employees", employeeRoutes);
 // Use routes
 app.use("/api/menu", menuRoutes);
 app.use("/api/tokens", mealTokenRoutes);
 app.use("/tokens", express.static(path.join(process.cwd(), "tokens")));
+
+
 app.get("/", (req, res) => {
   res.send("API is running...");
 });

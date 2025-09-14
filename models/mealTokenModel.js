@@ -1,44 +1,43 @@
 import mongoose from "mongoose";
 
-const mealTokenSchema = new mongoose.Schema({
-  userId: {
+
+const tokenSchema = new mongoose.Schema({
+  adminId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
   date: {
-    type: Date,
-    required: true,
-    default: () => new Date().toISOString().split("T")[0], // only date part
+     type: String,
+      required: true
+     },
+  mealType: {
+     type: String,
+      required: true 
+    },
+  tokenNumber: { 
+    type: Number, 
+    required: true 
   },
   items: [
-    {
-      name: { type: String, required: true },
-      qty: { type: Number, required: true },
-      price: { type: Number, required: true },
-    },
-  ],
+    { 
+      name: String,
+     qty: Number,
+      price: Number 
+    }
+    ],
+  tableNumber: {
+    type: Number,
+    required: true
+  },
   hotelName: {
     type: String,
-    
-  },
-  mealType: {
-    type: String,
-    enum: ["Breakfast", "Lunch", "Dinner"],
-    required: true,
-  },
-  tokenNumber: {
-    type: Number,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+    required: true
+  }
 });
 
-// Ensure unique token per date & meal
-mealTokenSchema.index({ date: 1, mealType: 1, tokenNumber: 1 }, { unique: true });
+// Ensure uniqueness per admin/day/meal/tokenNumber
+tokenSchema.index({ adminId: 1, date: 1, mealType: 1, tokenNumber: 1 }, { unique: true });
 
-const MealToken = mongoose.model("MealToken", mealTokenSchema);
-export default MealToken;
+export default mongoose.model("Token", tokenSchema);
+

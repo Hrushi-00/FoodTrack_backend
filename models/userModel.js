@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please provide your address'],
     trim: true
   },
-  hotel: {
+  hotelName: {
     type: String,
     required: [true, 'Please provide your hotel name'],
     trim: true
@@ -40,8 +40,8 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
+    enum: ['User', 'Admin'],
+    default: 'User'
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,

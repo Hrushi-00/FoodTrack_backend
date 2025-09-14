@@ -21,3 +21,13 @@ export const protect = async (req, res, next) => {
     return res.status(401).json({ message: "Not authorized, no token" });
   }
 };
+// Get Employees
+export const getEmployees = async (req, res) => {
+  try {
+    const adminId = req.user._id; // <-- change here
+    const employees = await employees.find({ adminId });
+    res.status(200).json(employees);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching employees", error: error.message });
+  }
+};
