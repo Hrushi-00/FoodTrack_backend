@@ -1,24 +1,24 @@
 import Menu from "../models/menuModel.js";
 
 // Add new menu (specific to user)
-export const addMenu = async (req, res) => {
-  try {
-    const { date, breakfast, lunch, dinner } = req.body;
-    const userId = req.user._id; // from logged-in user
+  export const addMenu = async (req, res) => {
+    try {
+      const { date, breakfast, lunch, dinner } = req.body;
+      const userId = req.user._id; // from logged-in user
 
-    const existingMenu = await Menu.findOne({ userId, date });
-    if (existingMenu) {
-      return res.status(400).json({ message: "Menu already exists for this date" });
+      const existingMenu = await Menu.findOne({ userId, date });
+      if (existingMenu) {
+        return res.status(400).json({ message: "Menu already exists for this date" });
+      }
+
+      const menu = new Menu({ userId, date, breakfast, lunch, dinner });
+      await menu.save();
+
+      res.status(201).json({ message: "Menu added successfully", menu });
+    } catch (error) {
+      res.status(500).json({ message: "Error adding menu", error: error.message });
     }
-
-    const menu = new Menu({ userId, date, breakfast, lunch, dinner });
-    await menu.save();
-
-    res.status(201).json({ message: "Menu added successfully", menu });
-  } catch (error) {
-    res.status(500).json({ message: "Error adding menu", error: error.message });
-  }
-};
+  };
 
 // Update menu (specific to user)
 export const updateMenu = async (req, res) => {
